@@ -20,6 +20,9 @@ namespace ToDoList.Controllers
             ViewBag.Statuses = context.Statuses.ToList();
             ViewBag.DueFilters = Filters.DueFilterValues;
 
+
+            var viewModel = new ToDoViewModel
+
             // get ToDo objects from database based on current filters
             IQueryable<ToDo> query = context.ToDos
                 .Include(t => t.Category).Include(t => t.Status);
