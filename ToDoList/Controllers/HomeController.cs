@@ -75,19 +75,20 @@ namespace ToDoList.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(ToDo task)
+        public IActionResult Add(ToDoViewModel model)
         {
             if (ModelState.IsValid)
             {
-                context.ToDos.Add(task);
+                context.ToDos.Add(model.CurrentTask);
                 context.SaveChanges();
                 return RedirectToAction("Index");
             }
             else
             {
-                ViewBag.Categories = context.Categories.ToList();
-                ViewBag.Statuses = context.Statuses.ToList();
-                return View(task);
+                model.Categories = context.Categories.ToList();
+                model.Statuses = context.Statuses.ToList();
+                model.DueFilters = Filters.DueFilterValues; // Assuming DueFilters is needed
+                return View(model);
             }
         }
 
