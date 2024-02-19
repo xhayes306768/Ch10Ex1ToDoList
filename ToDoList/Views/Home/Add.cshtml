@@ -15,7 +15,7 @@
         <label asp-for="CurrentTask.CategoryId">Category:</label>
         <select asp-for="CurrentTask.CategoryId" class="form-control"
                 asp-items="@(new SelectList(Model.Categories, "CategoryId", "Name"))">
-            <option value=""></option>
+            <option value=""></option> 
         </select>    
     </div>
 
