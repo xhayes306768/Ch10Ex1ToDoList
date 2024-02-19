@@ -9,7 +9,8 @@ namespace ToDoList.Models
         public List<Status> Statuses { get; set; } = null!; 
         public List<Category> Categories { get; set; } = null!;
         public Dictionary<string, string> DueFilters { get; set; } = null!;
-        public List<ToDo> Tasks { get; set; } = null!; public ToDo CurrentTask { get; set; } = null!; // used for Add
+        public List<ToDo> Tasks { get; set; } = null!;
+        public ToDo CurrentTask { get; set; } = null!; // used for Add
 
 
     }
