@@ -60,14 +60,18 @@ namespace ToDoList.Controllers
 
             return query.OrderBy(t => t.DueDate).ToList();
         }
-    
-        
+
+
 
         public IActionResult Add()
         {
-            ViewBag.Categories = context.Categories.ToList();
-            ViewBag.Statuses = context.Statuses.ToList();
-            return View();
+            var viewModel = new ToDoViewModel
+            {
+                Categories = context.Categories.ToList(),
+                Statuses = context.Statuses.ToList()
+
+            };
+        return View(viewModel);
         }
 
         [HttpPost]
