@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -21,26 +22,34 @@ namespace ToDoList.Controllers
             {
                 Filters = filters,
                 Categories = context.Categories.ToList(),
-                Status = context.Statuses.ToList(),
+                Statuses = context.Statuses.ToList(),
                 DueFilters = Filters.DueFilterValues,
-                Tasks = GetFilteredTasks(filters)  // Make sure GetFilteredTasks returns List<ToDo>
+                Tasks = GetFilteredTasks(filters)  
             };
 
+            return View(viewModel);
 
+        }
 
-
-
-            // get ToDo objects from database based on current filters
+        private List<ToDo> GetFilteredTasks(Filters filters)
+        {
             IQueryable<ToDo> query = context.ToDos
                 .Include(t => t.Category).Include(t => t.Status);
-            if (filters.HasCategory) {
+
+            if (filters.HasCategory)
+            {
                 query = query.Where(t => t.CategoryId == filters.CategoryId);
             }
-            if (filters.HasStatus) {
+
+            if (filters.HasStatus)
+            {
                 query = query.Where(t => t.StatusId == filters.StatusId);
             }
-            if (filters.HasDue) {
+
+            if (filters.HasDue)
+            {
                 var today = DateTime.Today;
+
                 if (filters.IsPast)
                     query = query.Where(t => t.DueDate < today);
                 else if (filters.IsFuture)
@@ -48,9 +57,11 @@ namespace ToDoList.Controllers
                 else if (filters.IsToday)
                     query = query.Where(t => t.DueDate == today);
             }
-            var tasks = query.OrderBy(t => t.DueDate).ToList();
-            return View(tasks);
+
+            return query.OrderBy(t => t.DueDate).ToList();
         }
+    
+        
 
         public IActionResult Add()
         {
